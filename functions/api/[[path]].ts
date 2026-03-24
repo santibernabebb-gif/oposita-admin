@@ -4,7 +4,7 @@ export const onRequest: PagesFunction = async (context) => {
   const who = await fetchIdentityFromAccess(request);
   const email = (who?.email || "").toLowerCase();
 
-  const allowed = "soporte.activatepro@gmail.com";
+  const allowed = "soporte.oposita@gmail.com";
 
   if (email !== allowed) {
     return json(
@@ -62,7 +62,7 @@ export const onRequest: PagesFunction = async (context) => {
   }
 
   const workerBase =
-    "https://recetassaludablespro.santibernabebb.workers.dev";
+    "https://oposita.santibernabebb.workers.dev";
 
   const targetUrl =
     workerBase + matched.targetPath + u.search;
