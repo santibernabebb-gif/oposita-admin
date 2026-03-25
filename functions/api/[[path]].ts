@@ -25,30 +25,29 @@ export const onRequest: PagesFunction = async (context) => {
       methods: new Set(["GET"]),
       targetPath: "/admin/user",
     },
-
     "/admin/add-tokens": {
       methods: new Set(["POST"]),
       targetPath: "/admin/add-tokens",
     },
-
     "/admin/reconcile": {
       methods: new Set(["POST"]),
       targetPath: "/admin/reconcile",
     },
-
     "/admin/reset-user": {
       methods: new Set(["POST"]),
       targetPath: "/admin/reset-user",
     },
-
     "/admin/purchasers": {
       methods: new Set(["GET"]),
       targetPath: "/admin/purchasers",
     },
-
     "/admin/api-logs": {
       methods: new Set(["GET"]),
       targetPath: "/admin/api-logs",
+    },
+    "/admin/oposiciones/refresh": {
+      methods: new Set(["POST"]),
+      targetPath: "/admin/oposiciones/refresh",
     },
   };
 
