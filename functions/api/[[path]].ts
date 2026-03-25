@@ -68,12 +68,24 @@ export const onRequest: PagesFunction = async (context) => {
 
   const ts = Date.now().toString();
 
-  const dataToSign =
-    `${ts}:${email}:${request.method}:${matched.targetPath}:${u.search}`;
+  // Leer body para incluirlo en la firma
+  const bodyText =
+    request.method === "GET" || request.method === "HEAD"
+      ? ""
+      : await request.clone().text();
+
+  // Formato que el worker espera: METHOD\nPATH\nTS\nEMAIL\nBODY
+  const canonical = [
+    request.method.toUpperCase(),
+    matched.targetPath + u.search,
+    ts,
+    email,
+    bodyText,
+  ].join("\n");
 
   const sig = await hmacSha256Hex(
     env.ADMIN_PROXY_SECRET,
-    dataToSign
+    canonical
   );
 
   const headers = new Headers();
@@ -99,7 +111,7 @@ export const onRequest: PagesFunction = async (context) => {
     request.method === "GET" ||
     request.method === "HEAD"
       ? undefined
-      : await request.arrayBuffer();
+      : new TextEncoder().encode(bodyText).buffer;
 
   return fetch(targetUrl, {
     method: request.method,
